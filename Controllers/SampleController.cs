@@ -9,7 +9,7 @@ namespace WebApp.Controllers
 {
     [Route("closedapi/[controller]")]
     [ApiController]
-    public class DataController : ControllerBase
+    public class SampleController : ControllerBase
     {
         // GET: api/Data
         [HttpGet]
