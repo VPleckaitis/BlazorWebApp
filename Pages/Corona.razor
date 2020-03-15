@@ -1,17 +1,18 @@
 ﻿@page "/corona"
+
 @using WebApp.Data
 @inject CoronaAPI CoronaAsService
 
 <h1>Corona counter</h1>
-if(@currentCount == null)
+@if(@currentCount == null)
 {
-<p>Loading stats...</p>
+<p><em>Loading stats...</em></p>
 }
 else
 {
-<p>Current cases: @currentCount.cases</p>
-<p>Current cases: @currentCount.deaths</p>
-<p>Current cases: @currentCount.recovered</p>
+<p>Current cases: @currentCount.cases.ToString()</p>
+<p>Current cases: @currentCount.deaths.ToString()</p>
+<p>Current cases: @currentCount.recovered.ToString()</p>
 }
 
 

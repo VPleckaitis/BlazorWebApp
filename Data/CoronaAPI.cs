@@ -18,7 +18,7 @@ namespace WebApp.Data
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var response = await client.GetStringAsync(APIUrl+"/all");
+                    var response = await client.GetStringAsync(APIUrl+"all");
                     var respObject = JObject.Parse(response);
 
 
@@ -30,6 +30,9 @@ namespace WebApp.Data
             }
             catch 
             {
+                stats.cases = -1;
+                stats.deaths = -1;
+                stats.recovered = -1;
                
             }
 
