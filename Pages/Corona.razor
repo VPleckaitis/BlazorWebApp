@@ -4,23 +4,62 @@
 @inject CoronaAPI CoronaAsService
 
 <h1>Corona counter</h1>
-@if(@currentCount == null)
+@if (@currentCount == null)
 {
-<p><em>Loading stats...</em></p>
+    <p><em>Loading stats...</em></p>
 }
 else
 {
-<p>Current cases: @currentCount.cases.ToString()</p>
-<p>Current cases: @currentCount.deaths.ToString()</p>
-<p>Current cases: @currentCount.recovered.ToString()</p>
+    <p>Cases: @currentCount.cases.ToString()</p>
+    <p>Deaths: @currentCount.deaths.ToString()</p>
+    <p>Recovered: @currentCount.recovered.ToString()</p>
+}
+
+@if (countries == null)
+{
+    <p><em>Loading country stats...</em></p>
+
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Cases</th>
+                <th>Today cases</th>
+                <th>Deaths</th>
+                <th>Today deaths</th>
+                <th>Recovered</th>
+                <th>Critical</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var country in countries)
+            {
+            <tr>
+                <td>@country.country</td>
+                <td>@country.cases</td>
+                <td>@country.todayCases</td>
+                <td>@country.deaths</td>
+                <td>@country.todayDeaths</td>
+                <td>@country.recovered</td>
+                <td>@country.critical</td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
 }
 
 
 @code {
     private GlobalCoronaStats currentCount;//
+    private List<CoronaListByCountry> countries;
 
     protected override async Task OnInitializedAsync()
     {
         currentCount = await CoronaAsService.GetTodayStatsAsync();
+        countries = await CoronaAsService.GetListWithCountriesAsync();
     }
 }

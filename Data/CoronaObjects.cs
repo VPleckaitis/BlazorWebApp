@@ -13,7 +13,7 @@ namespace WebApp.Data
         public int deaths { get; set; }
         public int recovered { get; set; }
     }
-    public class CoronaListByCounty
+    public class CoronaListByCountry
     {
         //{"country":"France","cases":4469,"todayCases":0,"deaths":91,"todayDeaths":0,"recovered":12,"critical":300}
         public string country { get; set; }

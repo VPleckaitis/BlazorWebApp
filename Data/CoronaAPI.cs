@@ -38,5 +38,39 @@ namespace WebApp.Data
 
             return stats;
         }
+
+        public async Task<List<CoronaListByCountry>> GetListWithCountriesAsync()
+        {
+            var countries = new List<CoronaListByCountry>();
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.GetStringAsync(APIUrl+ "countries");
+                    var respObject = JArray.Parse(response);
+
+                    foreach (var countryObj in respObject)
+                    {
+                        var country = new CoronaListByCountry();
+                        country.country = (string)countryObj["country"];
+                        country.cases = (int)countryObj["cases"];
+                        country.todayCases = (int)countryObj["todayCases"];
+                        country.deaths = (int)countryObj["deaths"];
+                        country.todayDeaths = (int)countryObj["todayDeaths"];
+                        country.recovered = (int)countryObj["recovered"];
+                        country.critical = (int)countryObj["critical"];
+
+                        countries.Add(country);
+                    }
+                }
+            }
+            catch
+            {
+               
+            }
+
+            return countries;
+        }
     }
 }
+
