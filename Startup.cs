@@ -31,6 +31,7 @@ namespace WebApp
             services.AddControllers();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<TheCatAPI>();
+            services.AddSingleton<CoronaAPI>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

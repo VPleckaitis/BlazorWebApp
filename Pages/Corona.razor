@@ -1,0 +1,25 @@
+﻿@page "/corona"
+@using WebApp.Data
+@inject CoronaAPI CoronaAsService
+
+<h1>Corona counter</h1>
+if(@currentCount == null)
+{
+<p>Loading stats...</p>
+}
+else
+{
+<p>Current cases: @currentCount.cases</p>
+<p>Current cases: @currentCount.deaths</p>
+<p>Current cases: @currentCount.recovered</p>
+}
+
+
+@code {
+    private GlobalCoronaStats currentCount;//
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentCount = await CoronaAsService.GetTodayStatsAsync();
+    }
+}

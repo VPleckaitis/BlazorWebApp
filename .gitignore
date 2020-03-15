@@ -198,3 +198,6 @@
 /.vs/WebApp/v16/Server/sqlite3/storage.ide-wal
 /.vs/WebApp/v16/Server/sqlite3/storage.ide-shm
 /.vs/WebApp/v16/Server/sqlite3/storage.ide
+/.vs/WebApp/v16/.suo
+/.vs/WebApp/DesignTimeBuild/.dtbcache
+/.vs/WebApp/config/applicationhost.config
