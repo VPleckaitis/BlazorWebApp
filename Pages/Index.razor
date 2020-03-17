@@ -1,25 +1,6 @@
 ﻿@page "/"
 
-@using WebApp.Data
-@inject TheCatAPI CatAsService
+    <h1>Blazor test web app</h1>
 
-@if (cat == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <h1>Hiya</h1>
-
-    <p> Welcome to your new app.</p>
+    <p>Just trying out new things with new blazor framework.</p>
     <br />
-<img src=@cat.URL />
-}
-@code {
-private TheCat cat;
-
-protected override async Task OnInitializedAsync()
-{
-    cat = await CatAsService.GetRandomCatAsync();
-}
-}
