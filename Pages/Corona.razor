@@ -21,8 +21,8 @@ else
     }
     else
     {
-        <p>Cases today: @countries.Sum(o => o.todayCases).ToString()</p>
-        <p>Deaths today: @countries.Sum(o => o.todayDeaths).ToString()</p>
+        <p>Cases today: @countriesCache.Sum(o => o.todayCases).ToString()</p>
+        <p>Deaths today: @countriesCache.Sum(o => o.todayDeaths).ToString()</p>
     }
 }
 
