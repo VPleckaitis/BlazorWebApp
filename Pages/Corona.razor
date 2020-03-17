@@ -38,6 +38,7 @@ else
             @foreach (var country in countries)
             {
             <tr>
+             
                 <td>@country.country</td>
                 <td>@country.cases</td>
                 <td>@country.todayCases</td>
@@ -47,6 +48,7 @@ else
                 <td>@country.critical</td>
 
             </tr>
+          
             }
         </tbody>
     </table>
@@ -56,6 +58,7 @@ else
 @code {
     private GlobalCoronaStats currentCount;//
     private List<CoronaListByCountry> countries;
+    private int numberInList = 0;
 
     protected override async Task OnInitializedAsync()
     {
