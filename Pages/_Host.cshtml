@@ -32,6 +32,16 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
-    <script src="_content/Blazor-Analytics/blazor-analytics.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-160806722-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-160806722-1');
+    </script>
+
 </body>
 </html>
