@@ -21,8 +21,8 @@ else
     }
     else
     {
-        <p>Cases today: @countries.Sum(o=>o.todayCases).ToString()</p>
-        <p>Deaths today: @countries.Sum(o=>o.todayDeaths).ToString()</p>
+        <p>Cases today: @countries.Sum(o => o.todayCases).ToString()</p>
+        <p>Deaths today: @countries.Sum(o => o.todayDeaths).ToString()</p>
     }
 }
 
@@ -33,16 +33,19 @@ else
 }
 else
 {
+    <label for="countryFilter">Country</label>
+    <input type="text" id="countryFilter" bind="@TxtInput" @oninput="@((ui)=>{@TxtInput=(string)ui.Value;})" />
+
     <table class="table">
         <thead>
             <tr>
-                <th><span class="oi oi-globe" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("country"))">Country</span></th>
-                <th><span class="oi oi-eye" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("cases"))">Cases</span></th>
-                <th><span class="oi oi-magnifying-glass" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("todayCases"))">Today cases</span></th>
-                <th><span class="oi oi-minus" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("deaths"))">Deaths</span></th>
-                <th><span class="oi oi-pulse" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("todayDeaths"))">Today deaths</span></th>
-                <th><span class="oi oi-heart" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("recovered"))">Recovered</span></th>
-                <th><span class="oi oi-warning" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("critical"))">Critical</span></th>
+                <th class="td-background" @onclick="@(() => SortTable("country"))"><span class="oi oi-globe" aria-hidden="true"></span><span class="sort-link">Country</span></th>
+                <th class="td-background" @onclick="@(() => SortTable("cases"))"><span class="oi oi-eye" aria-hidden="true"></span><span class="sort-link">Cases</span></th>
+                <th class="td-background" @onclick="@(() => SortTable("todayCases"))"><span class="oi oi-magnifying-glass" aria-hidden="true"></span><span class="sort-link">Today cases</span></th>
+                <th class="td-background" @onclick="@(() => SortTable("deaths"))"><span class="oi oi-minus" aria-hidden="true"></span><span class="sort-link">Deaths</span></th>
+                <th class="td-background" @onclick="@(() => SortTable("todayDeaths"))"><span class="oi oi-pulse" aria-hidden="true"></span><span class="sort-link">Today deaths</span></th>
+                <th class="td-background" @onclick="@(() => SortTable("recovered"))"><span class="oi oi-heart" aria-hidden="true"></span><span class="sort-link">Recovered</span></th>
+                <th class="td-background" @onclick="@(() => SortTable("critical"))"><span class="oi oi-warning" aria-hidden="true"></span><span class="sort-link">Critical</span></th>
             </tr>
         </thead>
         <tbody>
@@ -67,13 +70,26 @@ else
 
 @code {
     private GlobalCoronaStats currentCount;//
+    private List<CoronaListByCountry> countriesCache;
     private List<CoronaListByCountry> countries;
     private int numberInList = 0;
+
+    private string _txtInput { get; set; }
+    protected string TxtInput
+    {get { return _txtInput; }
+        set
+        {
+            _txtInput = value;
+            FilterTable(value);
+        }
+
+    }
 
     protected override async Task OnInitializedAsync()
     {
         currentCount = await CoronaAsService.GetTodayStatsAsync();
-        countries = await CoronaAsService.GetListWithCountriesAsync();
+        countriesCache = await CoronaAsService.GetListWithCountriesAsync();
+        countries = countriesCache; //Just so we can search cached list on the fly
     }
     private void SortTable(string columnName)
     {
@@ -103,6 +119,10 @@ else
 
             default: break;
         }
+    }
+    private void FilterTable(string txt)
+    {
+        countries = countriesCache.Where(o => o.country.ToLower().Contains(txt.ToLower())).ToList();
     }
 
 }
