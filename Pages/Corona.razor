@@ -1,6 +1,8 @@
 ﻿@page "/corona"
 
 @using WebApp.Data
+
+
 @inject CoronaAPI CoronaAsService
 
 <h1>Corona counter</h1>
@@ -13,6 +15,15 @@ else
     <p>Cases: @currentCount.cases.ToString()</p>
     <p>Deaths: @currentCount.deaths.ToString()</p>
     <p>Recovered: @currentCount.recovered.ToString()</p>
+    @if (countries == null)
+    {
+        <p><em>Loading today stats...</em></p>
+    }
+    else
+    {
+        <p>Cases today: @countries.Sum(o=>o.todayCases).ToString()</p>
+        <p>Deaths today: @countries.Sum(o=>o.todayDeaths).ToString()</p>
+    }
 }
 
 @if (countries == null)
@@ -25,35 +36,34 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Country</th>
-                <th>Cases</th>
-                <th>Today cases</th>
-                <th>Deaths</th>
-                <th>Today deaths</th>
-                <th>Recovered</th>
-                <th>Critical</th>
+                <th><span class="oi oi-globe" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("country"))">Country</span></th>
+                <th><span class="oi oi-eye" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("cases"))">Cases</span></th>
+                <th><span class="oi oi-magnifying-glass" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("todayCases"))">Today cases</span></th>
+                <th><span class="oi oi-minus" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("deaths"))">Deaths</span></th>
+                <th><span class="oi oi-pulse" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("todayDeaths"))">Today deaths</span></th>
+                <th><span class="oi oi-heart" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("recovered"))">Recovered</span></th>
+                <th><span class="oi oi-warning" aria-hidden="true"></span><span class="sort-link" @onclick="@(() => SortTable("critical"))">Critical</span></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var country in countries)
             {
-            <tr>
-             
-                <td>@country.country</td>
-                <td>@country.cases</td>
-                <td>@country.todayCases</td>
-                <td>@country.deaths</td>
-                <td>@country.todayDeaths</td>
-                <td>@country.recovered</td>
-                <td>@country.critical</td>
+                <tr>
 
-            </tr>
-          
+                    <td>@country.country</td>
+                    <td>@country.cases</td>
+                    <td>@country.todayCases</td>
+                    <td>@country.deaths</td>
+                    <td>@country.todayDeaths</td>
+                    <td>@country.recovered</td>
+                    <td>@country.critical</td>
+
+                </tr>
+
             }
         </tbody>
     </table>
 }
-
 
 @code {
     private GlobalCoronaStats currentCount;//
@@ -65,4 +75,34 @@ else
         currentCount = await CoronaAsService.GetTodayStatsAsync();
         countries = await CoronaAsService.GetListWithCountriesAsync();
     }
+    private void SortTable(string columnName)
+    {
+        switch (columnName)
+        {
+            case "country":
+                countries = countries.OrderBy(o => o.country).ToList();
+                break;
+            case "cases":
+                countries = countries.OrderByDescending(o => o.cases).ToList();
+                break;
+            case "todayCases":
+                countries = countries.OrderByDescending(o => o.todayCases).ToList();
+                break;
+            case "deaths":
+                countries = countries.OrderByDescending(o => o.deaths).ToList();
+                break;
+            case "todayDeaths":
+                countries = countries.OrderByDescending(o => o.todayDeaths).ToList();
+                break;
+            case "recovered":
+                countries = countries.OrderByDescending(o => o.recovered).ToList();
+                break;
+            case "critical":
+                countries = countries.OrderByDescending(o => o.critical).ToList();
+                break;
+
+            default: break;
+        }
+    }
+
 }
