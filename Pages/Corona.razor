@@ -35,7 +35,7 @@ else
 {
     <label for="countryFilter">Country</label>
     <input type="text" id="countryFilter" bind="@TxtInput" @oninput="@((ui)=>{@TxtInput=(string)ui.Value;})" />
-
+    
     <table class="table">
         <thead>
             <tr>
@@ -78,7 +78,8 @@ else
 
     private string _txtInput { get; set; }
     protected string TxtInput
-    {get { return _txtInput; }
+    {
+        get { return _txtInput; }
         set
         {
             _txtInput = value;

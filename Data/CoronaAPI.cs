@@ -9,7 +9,7 @@ namespace WebApp.Data
 {
     public class CoronaAPI
     {
-       private string APIUrl = "https://corona.lmao.ninja/";
+       private string APIUrl = "https://corona.lmao.ninja/v2/";
 
         public async Task<GlobalCoronaStats> GetTodayStatsAsync()
         {
