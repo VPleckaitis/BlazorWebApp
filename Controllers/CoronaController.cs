@@ -4,13 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Data;
 
 namespace WebApp.Controllers
 {
     [Route("closedapi/[controller]")]
     [ApiController]
-    public class SampleController : ControllerBase
+    public class CoronaController : ControllerBase
     {
+        private readonly CoronaAPI corona;
+        public CoronaController(CoronaAPI _api)
+        {
+            corona = _api;
+        }
+
+
         // GET: api/Data
         [HttpGet]
         public IEnumerable<string> Get()
