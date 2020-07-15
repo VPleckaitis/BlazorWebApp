@@ -1,0 +1,4 @@
+language: csharp
+solution: ./WebApp.sln
+install: nuget restore ./WebApp.sln
+mono: latest
