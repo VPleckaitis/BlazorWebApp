@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using WebApp.Models;
 
 namespace WebApp.Data
 {
     public class TheCatAPI
     {
-       private string APIUrl = "https://api.thecatapi.com/v1/images/search";
+       private readonly string APIUrl = "https://api.thecatapi.com/v1/images/search";
 
         public async Task<TheCat> GetRandomCatAsync()
         {

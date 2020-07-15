@@ -1,9 +1,9 @@
 ﻿@page "/corona"
 
-@using WebApp.Data
+@using WebApp.Models
 
 
-@inject CoronaAPI CoronaAsService
+@inject WebApp.Data.CoronaAPI CoronaAsService
 
 <h1>Corona counter</h1>
 @if (@currentCount == null)
@@ -71,7 +71,7 @@ else
 }
 
 @code {
-    private GlobalCoronaStats currentCount;//
+    private CoronaGlobalStats currentCount;//
     private List<CoronaListByCountry> countriesCache;
     private List<CoronaListByCountry> countries;
     private int numberInList = 0;
