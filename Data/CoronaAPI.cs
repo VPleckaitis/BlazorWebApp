@@ -15,7 +15,7 @@ namespace WebApp.Data
 
         public async Task<CoronaGlobalStats> GetTodayStatsAsync()
         {
-            CoronaGlobalStats stats = new CoronaGlobalStats();
+            CoronaGlobalStats stats; 
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -26,10 +26,10 @@ namespace WebApp.Data
             }
             catch 
             {
+                stats = new CoronaGlobalStats();
                 stats.cases = -1;
                 stats.deaths = -1;
                 stats.recovered = -1;
-               
             }
 
             return stats;
@@ -37,7 +37,7 @@ namespace WebApp.Data
 
         public async Task<List<CoronaListByCountry>> GetListWithCountriesAsync()
         {
-            List<CoronaListByCountry> countries = new List<CoronaListByCountry>();
+            List<CoronaListByCountry> countries;
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -48,7 +48,7 @@ namespace WebApp.Data
             }
             catch // failed to deserialise, ignore for now
             {
-               
+               countries =  new List<CoronaListByCountry>(); // just return empty list without crashing
             }
 
             return countries;

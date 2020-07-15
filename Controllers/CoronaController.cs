@@ -26,16 +26,13 @@ namespace WebApp.Controllers
         {
             var result = await corona.GetListWithCountriesAsync();
             if (!string.IsNullOrEmpty(filter))
+            {
                 result = result.Where(o => o.country.ToLower().StartsWith(filter.ToLower())).ToList();
+            }
             return new OkObjectResult(result);
         }
 
-        //// GET: api/Data/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+       
 
     }
 }
