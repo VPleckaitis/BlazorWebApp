@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Data;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -19,36 +20,22 @@ namespace WebApp.Controllers
         }
 
 
-        // GET: api/Data
+     
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<CoronaListByCountry>>> Get(string filter)
         {
-            return new string[] { "value1", "value2" };
+            var result = await corona.GetListWithCountriesAsync();
+            if (!string.IsNullOrEmpty(filter))
+                result = result.Where(o => o.country.ToLower().StartsWith(filter.ToLower())).ToList();
+            return new OkObjectResult(result);
         }
 
-        // GET: api/Data/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //// GET: api/Data/5
+        //[HttpGet("{id}", Name = "Get")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
-        // POST: api/Data
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/Data/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
