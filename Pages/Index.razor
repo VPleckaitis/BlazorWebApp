@@ -1,8 +1,27 @@
 ﻿@page "/"
+@using WebApp.Models
+
+
+@inject WebApp.Data.TheCatAPI TheCat
 
     <h1>Blazor test web app</h1>
 
     <p>Just trying out new things with new blazor framework.</p>
-  
+  @if (img == null)
+{
+    <p><em>Loading cat...</em></p>
+}
+else
+{
+    <p><em><img src="@img.URL" width="@img.Width" height="@img.Height"/></em></p>
+}
 
     <br />
+@code {
+    TheCat img;
+
+    protected override async Task OnInitializedAsync()
+    {
+        img = await TheCat.GetRandomCatAsync();
+    }
+    }
