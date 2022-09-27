@@ -17,7 +17,7 @@ dotnet build
 dotnet publish
 mv wwwroot -v /var/www/${appFolder}
 
-cd ./bin/Debug/netcoreapp3.1/publish
+cd ./bin/Debug/net6.0/publish
 rm appsettings* #delete all appsettings files
 echo Stopping current service
 systemctl stop ${appServiceName}
