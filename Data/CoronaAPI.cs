@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace WebApp.Data
 {
+    [Obsolete]
     public class CoronaAPI
     {
        private readonly string APIUrl = "https://corona.lmao.ninja/v2/";
