@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApp.Models
 {
+    [Obsolete]
     public class CoronaGlobalStats
     {
         public int cases { get; set; }

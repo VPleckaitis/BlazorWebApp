@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApp.Models
 {
+    [Obsolete]
     public class CoronaListByCountry
     {
         public string country { get; set; }
