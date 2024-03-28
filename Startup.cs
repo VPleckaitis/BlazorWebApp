@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using WebApp.Data;
+using VytasCoUk.Database;
+using WebApp.Services;
+
 
 namespace WebApp
 {
@@ -28,10 +32,10 @@ namespace WebApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AxiDb>(options => options.UseNpgsql("conn string here"));
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddControllers();
-           
 
             services.AddSwaggerGen(c =>
             {
@@ -44,6 +48,7 @@ namespace WebApp
 
             services.AddTransient<TheCatAPI>();
             services.AddTransient<CoronaAPI>();
+            services.AddTransient<DbService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
