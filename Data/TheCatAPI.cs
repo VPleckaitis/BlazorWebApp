@@ -10,10 +10,14 @@ namespace WebApp.Data
 {
     public class TheCatAPI
     {
-       private readonly string APIUrl = "https://api.thecatapi.com/v1/images/search";
+        private readonly string APIUrl = "https://api.thecatapi.com/v1/images/search";
+        private readonly int MaxWidth = 800;
+        private readonly int MaxHeight = 500;
 
         public async Task<TheCat> GetRandomCatAsync()
         {
+           
+
             var cat = new TheCat();
             try
             {
@@ -27,6 +31,10 @@ namespace WebApp.Data
                         cat.URL = (string)catObj["url"];
                         cat.Width = (int)catObj["width"];
                         cat.Height = (int)catObj["height"];
+                        double wRatio = (double)MaxWidth / (double)cat.Width;
+                        double hRatio = (double)MaxHeight / (double)cat.Height;
+                        cat.Width = (int)(cat.Width * Math.Min(wRatio,hRatio));
+                        cat.Height = (int)(cat.Height * Math.Min(wRatio,hRatio));
                     }
                 }    
             }

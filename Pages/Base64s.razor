@@ -1,0 +1,73 @@
+﻿@inject WebApp.Services.Base64Service base64convert;
+@page "/base64"
+<h3>Encode / decode base64 (strings only)</h3>
+<textarea name="tbInput" bind="TxtInput" @oninput="@((ui)=>{@TxtInput=(string)ui.Value;})" style="width:100%; min-height: 220px;max-height: 640px;" /> &nbsp;
+<br />
+<br />
+
+@if (@disabled)
+{
+    <input type="button" value="Decode" disabled />
+
+    <input type="button" value="Encode" disabled />
+}
+else
+{
+    <input type="button" value="Decode" @onclick="@(() => ButtonActionDecode())" />
+
+    <input type="button" value="Encode" @onclick="@(() => ButtonActionEncode())" />
+}
+
+<br />
+<br />
+
+<h4>Encoded / decoded result</h4>
+@if(string.IsNullOrEmpty(TxtOutput))
+{
+    <textarea style="width:100%; min-height: 220px;max-height: 640px;" />
+}
+else
+{
+    <textarea style="width:100%; min-height: 220px;max-height: 640px; resize:vertical; overflow:auto;">@TxtOutput</textarea>
+}
+
+<div id="dContent">
+    
+</div>
+
+
+
+@code {
+    bool @disabled = true;
+    private string _txtInput { get; set; }
+    protected string TxtInput
+    {
+        get { return _txtInput; }
+        set
+        {
+            _txtInput = value;
+            disabled = string.IsNullOrEmpty(_txtInput);
+        }
+
+    }
+
+    private string _txtOutput;
+    protected string TxtOutput
+    {
+        get { return _txtOutput; }
+        set { _txtOutput = value; 
+        }
+    }
+
+    private async void ButtonActionDecode()
+    {
+        var res = await base64convert.DecodeBase64(TxtInput);
+        TxtOutput = res;
+    }
+    private async void ButtonActionEncode()
+    {
+        var res = await base64convert.EncodeBase64(TxtInput);
+        TxtOutput = res;
+    }
+
+}
