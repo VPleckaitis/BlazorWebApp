@@ -49,6 +49,7 @@ namespace WebApp
             services.AddTransient<TheCatAPI>();
             services.AddTransient<CoronaAPI>();
             services.AddTransient<DbService>();
+            services.AddTransient<Base64Service>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
